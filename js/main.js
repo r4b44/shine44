@@ -317,7 +317,7 @@
             formData.append('message', document.getElementById('message').value);
 
             // wyślij do backendu
-            fetch('send-email.php', {
+            fetch('https://formspree.io/f/xvzznzgp', {
                 method: 'POST',
                 body: formData
             })
