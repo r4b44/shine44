@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shine Car Detailing - Profesjonalne Auto Detailing w Knurowie</title>
+    <meta name="description" content="Profesjonalne auto detailing w Knurowie. Korekta lakieru, ochrona ceramiczna, czyszczenie wnętrza. Nowoczesne technologie i najwyższa jakość.">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.ico">
+
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand mx-auto" href="#home">
+                <span class="brand-shine">SHINE</span>
+                <span class="brand-subtitle">Car Detailing</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#home">Start</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Usługi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#calculator">Kalkulator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Realizacje</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">O nas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Kontakt</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-btn" href="#booking">Umów wizytę</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h1 class="hero-title">
+                            <span class="hero-subtitle">Profesjonalny</span>
+                            <span class="hero-main">Auto Detailing</span>
+                            <span class="hero-tagline">Perfekcja w każdym detalu</span>
+                        </h1>
+                        <p class="hero-description">
+                            Najwyższa jakość usług detailingowych w Knurowie. Korekta lakieru, ochrona ceramiczna,
+                            czyszczenie wnętrza i wiele więcej. Przywróć swojemu samochodowi blask salonu.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#booking" class="btn btn-primary btn-lg">Umów wizytę</a>
+                            <a href="#calculator" class="btn btn-outline-light btn-lg">Kalkulator cen</a>
+                        </div>
+                        <div class="hero-features">
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Ochrona ceramiczna</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-star"></i>
+                                <span>Korekta lakieru</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-leaf"></i>
+                                <span>Eko technologie</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <a href="#services">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">Zadowolonych klientów</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="5">0</div>
+                        <div class="stat-label">Lat doświadczenia</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="15">0</div>
+                        <div class="stat-label">Usług detailingowych</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="100">0</div>
+                        <div class="stat-label">% Satysfakcji</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="promotions" class="promotions-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Aktualne promocje</span>
+                <h2 class="section-title">Specjalne oferty</h2>
+                <p class="section-description">
+                    Sprawdź nasze bieżące promocje i zaoszczędź na usługach detailingowych
+                </p>
+            </div>
+            <div id="promotionsContainer" class="promotions-grid">
+                <div class="no-promotions" style="text-align: center; padding: 3rem; color: #6c757d;">
+                    <i class="fas fa-tag" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                    <p>Brak aktualnych promocji. Wróć wkrótce!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Nasze usługi</span>
+                <h2 class="section-title">Kompleksowa opieka nad Twoim autem</h2>
+                <p class="section-description">
+                    Oferujemy pełen zakres usług detailingowych z wykorzystaniem najnowszych technologii
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3 class="service-title">Korekta lakieru</h3>
+                        <p class="service-description">
+                            Profesjonalna korekta usuwająca zarysowania, hologramy i matowienia.
+                            Przywróć lakierowi głęboki połysk.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Usuwanie rys i zarysowań</li>
+                            <li><i class="fas fa-check"></i> Eliminacja hologramów</li>
+                            <li><i class="fas fa-check"></i> Głęboki połysk</li>
+                        </ul>
+                        <a href="#calculator" class="service-link">Wycena <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card featured">
+                        <div class="service-badge">Popularne</div>
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="service-title">Ochrona ceramiczna</h3>
+                        <p class="service-description">
+                            Powłoki ceramiczne najwyższej jakości chroniące lakier przed czynnikami zewnętrznymi
+                            nawet do 5 lat.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Ochrona do 5 lat</li>
+                            <li><i class="fas fa-check"></i> Efekt hydrofobowy</li>
+                            <li><i class="fas fa-check"></i> Odporność na zarysowania</li>
+                            <li><i class="fas fa-check"></i> Łatwiejsze utrzymanie czystości</li>
+                        </ul>
+                        <a href="#calculator" class="service-link">Wycena <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-couch"></i>
+                        </div>
+                        <h3 class="service-title">Czyszczenie wnętrza</h3>
+                        <p class="service-description">
+                            Kompleksowe czyszczenie tapicerki, deski rozdzielczej i wszystkich elementów wnętrza.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Pranie tapicerki</li>
+                            <li><i class="fas fa-check"></i> Ozonowanie</li>
+                            <li><i class="fas fa-check"></i> Czyszczenie skóry</li>
+                        </ul>
+                        <a href="#calculator" class="service-link">Wycena <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-car-wash"></i>
+                        </div>
+                        <h3 class="service-title">Mycie parowe</h3>
+                        <p class="service-description">
+                            Ekologiczne mycie parowe delikatne dla lakieru i środowiska.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Bezpieczne dla lakieru</li>
+                            <li><i class="fas fa-check"></i> Ekologiczne</li>
+                            <li><i class="fas fa-check"></i> Skuteczne czyszczenie</li>
+                        </ul>
+                        <a href="#calculator" class="service-link">Wycena <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="service-title">Renowacja reflektorów</h3>
+                        <p class="service-description">
+                            Przywróć reflektorom przejrzystość i popraw widoczność podczas jazdy.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Usuwanie matowienia</li>
+                            <li><i class="fas fa-check"></i> Polerowanie</li>
+                            <li><i class="fas fa-check"></i> Zabezpieczenie UV</li>
+                        </ul>
+                        <a href="#calculator" class="service-link">Wycena <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-spray-can"></i>
+                        </div>
+                        <h3 class="service-title">Wosk & Wax</h3>
+                        <p class="service-description">
+                            Aplikacja wosku premium dla dodatkowej ochrony i niezwykłego połysku.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Ochrona do 3 miesięcy</li>
+                            <li><i class="fas fa-check"></i> Głęboki połysk</li>
+                            <li><i class="fas fa-check"></i> Efekt hydrofobowy</li>
+                        </ul>
+                        <a href="#calculator" class="service-link">Wycena <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Kalkulator wycen</span>
+                <h2 class="section-title">Sprawdź cenę usługi</h2>
+                <p class="section-description">
+                    Wybierz usługi i rozmiar pojazdu, aby otrzymać wstępną wycenę
+                </p>
+            </div>
+            <div class="calculator-wrapper">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="calculator-form">
+                            <div class="form-step active" data-step="1">
+                                <h3 class="step-title">Wybierz rozmiar pojazdu</h3>
+                                <div class="vehicle-types">
+                                    <div class="vehicle-type" data-type="small" data-multiplier="1">
+                                        <div class="vehicle-emoji">🚗</div>
+                                        <h4>Segment A/B</h4>
+                                        <p>Małe auta miejskie</p>
+                                        <span class="vehicle-example">np. Fiat 500, VW Polo</span>
+                                    </div>
+                                    <div class="vehicle-type" data-type="medium" data-multiplier="1.2">
+                                        <div class="vehicle-emoji">🚙</div>
+                                        <h4>Segment C/D</h4>
+                                        <p>Średnie sedany, kombi</p>
+                                        <span class="vehicle-example">np. VW Golf, Passat</span>
+                                    </div>
+                                    <div class="vehicle-type" data-type="large" data-multiplier="1.5">
+                                        <div class="vehicle-emoji">🚐</div>
+                                        <h4>SUV / VAN</h4>
+                                        <p>Duże pojazdy</p>
+                                        <span class="vehicle-example">np. X5, Q7, Transporter</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-step" data-step="2">
+                                <h3 class="step-title">Wybierz usługi</h3>
+                                <div class="services-list">
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service1" data-price="800">
+                                        <label for="service1">
+                                            <span class="service-name">Korekta lakieru 1-etapowa</span>
+                                            <span class="service-price">od 800 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service2" data-price="1200">
+                                        <label for="service2">
+                                            <span class="service-name">Korekta lakieru 2-etapowa</span>
+                                            <span class="service-price">od 1200 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service3" data-price="1500">
+                                        <label for="service3">
+                                            <span class="service-name">Ochrona ceramiczna 3 lata</span>
+                                            <span class="service-price">od 1500 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service4" data-price="2500">
+                                        <label for="service4">
+                                            <span class="service-name">Ochrona ceramiczna 5 lat</span>
+                                            <span class="service-price">od 2500 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service5" data-price="400">
+                                        <label for="service5">
+                                            <span class="service-name">Czyszczenie wnętrza Premium</span>
+                                            <span class="service-price">od 400 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service6" data-price="250">
+                                        <label for="service6">
+                                            <span class="service-name">Pranie tapicerki</span>
+                                            <span class="service-price">od 250 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service7" data-price="150">
+                                        <label for="service7">
+                                            <span class="service-name">Mycie Premium + Wax</span>
+                                            <span class="service-price">od 150 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service8" data-price="200">
+                                        <label for="service8">
+                                            <span class="service-name">Renowacja reflektorów</span>
+                                            <span class="service-price">od 200 zł</span>
+                                        </label>
+                                    </div>
+                                    <div class="service-checkbox">
+                                        <input type="checkbox" id="service9" data-price="100">
+                                        <label for="service9">
+                                            <span class="service-name">Ozonowanie</span>
+                                            <span class="service-price">od 100 zł</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="calculator-navigation">
+                                <button type="button" class="btn btn-secondary" id="prevStep" style="display: none;">
+                                    <i class="fas fa-arrow-left"></i> Wstecz
+                                </button>
+                                <button type="button" class="btn btn-primary" id="nextStep">
+                                    Dalej <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="calculator-summary">
+                            <h3>Podsumowanie</h3>
+                            <div class="summary-vehicle">
+                                <i class="fas fa-car"></i>
+                                <span id="selectedVehicle">Nie wybrano pojazdu</span>
+                            </div>
+                            <div class="summary-services">
+                                <h4>Wybrane usługi:</h4>
+                                <ul id="selectedServices">
+                                    <li class="empty-state">Brak wybranych usług</li>
+                                </ul>
+                            </div>
+                            <div class="summary-total">
+                                <span>Szacowana cena:</span>
+                                <span class="total-price" id="totalPrice">0 zł</span>
+                            </div>
+                            <p class="summary-note">
+                                <i class="fas fa-info-circle"></i>
+                                Cena jest orientacyjna. Dokładna wycena po oględzinach pojazdu.
+                            </p>
+                            <button type="button" id="bookFromCalculator" class="btn btn-primary btn-block">Umów wizytę z wyceną</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle">Nasze realizacje</span>
+                <h2 class="section-title">Zobacz efekty naszej pracy</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <h4>Korekta lakieru</h4>
+                        <p>BMW M3</p>
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <h4>Ochrona ceramiczna</h4>
+                        <p>Audi RS6</p>
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <h4>Czyszczenie wnętrza</h4>
+                        <p>Mercedes S-Class</p>
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <h4>Mycie Premium</h4>
+                        <p>Porsche 911</p>
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <h4>Komplet usług</h4>
+                        <p>Tesla Model S</p>
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <h4>Renowacja lakieru</h4>
+                        <p>VW Golf GTI</p>
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="about-image">
+                        <div class="about-badge">
+                            <i class="fas fa-award"></i>
+                            <span>5 lat<br>doświadczenia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <span class="section-subtitle">O nas</span>
+                        <h2 class="section-title">Pasja i profesjonalizm w każdym detalu</h2>
+                        <p class="about-text">
+                            Jesteśmy młodym, dynamicznym zespołem z pasją do motoryzacji i dbałości o każdy detal.
+                            Od 5 lat świadczymy kompleksowe usługi detailingowe na najwyższym poziomie.
+                        </p>
+                        <p class="about-text">
+                            Wykorzystujemy najnowocześniejsze technologie i produkty premium, aby Twoje auto
+                            wyglądało lepiej niż w salonie. Każde zlecenie traktujemy indywidualnie,
+                            dostosowując usługi do potrzeb klienta.
+                        </p>
+                        <div class="about-features">
+                            <div class="about-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Profesjonalny sprzęt</h4>
+                                    <p>Najnowsze technologie detailingowe</p>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Produkty premium</h4>
+                                    <p>Tylko sprawdzone marki najwyższej jakości</p>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h4>Ekologiczne podejście</h4>
+                                    <p>Dbamy o środowisko i Twój samochód</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="booking-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="booking-info">
+                        <span class="section-subtitle">Rezerwacja</span>
+                        <h2 class="section-title">Umów wizytę już dziś</h2>
+                        <p class="booking-description">
+                            Wypełnij formularz, a skontaktujemy się z Tobą w ciągu 24h aby potwierdzić termin wizyty.
+                        </p>
+                        <div class="booking-features">
+                            <div class="booking-feature">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4>Szybka odpowiedź</h4>
+                                    <p>Odpisujemy w ciągu 24h</p>
+                                </div>
+                            </div>
+                            <div class="booking-feature">
+                                <i class="fas fa-calendar-check"></i>
+                                <div>
+                                    <h4>Elastyczne terminy</h4>
+                                    <p>Dopasujemy się do Twojego grafiku</p>
+                                </div>
+                            </div>
+                            <div class="booking-feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <h4>Gwarancja jakości</h4>
+                                    <p>100% satysfakcji z wykonanych usług</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="booking-form">
+                        <form id="bookingForm">
+                            <div class="form-group">
+                                <label for="name">Imię i nazwisko *</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Telefon *</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="vehicle">Marka i model auta</label>
+                                <input type="text" class="form-control" id="vehicle" placeholder="np. BMW 3 E90">
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Wybierz usługę *</label>
+                                <select class="form-control" id="service" required>
+                                    <option value="">Wybierz...</option>
+                                    <option value="korekta1">Korekta lakieru 1-etapowa</option>
+                                    <option value="korekta2">Korekta lakieru 2-etapowa</option>
+                                    <option value="ceramika3">Ochrona ceramiczna 3 lata</option>
+                                    <option value="ceramika5">Ochrona ceramiczna 5 lat</option>
+                                    <option value="wnetrze">Czyszczenie wnętrza Premium</option>
+                                    <option value="tapicerka">Pranie tapicerki</option>
+                                    <option value="mycie">Mycie Premium</option>
+                                    <option value="reflektory">Renowacja reflektorów</option>
+                                    <option value="inne">Inne - opiszę w wiadomości</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Preferowany termin</label>
+                                <input type="date" class="form-control" id="date">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Dodatkowe informacje</label>
+                                <textarea class="form-control" id="message" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Wyślij zapytanie <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Adres</h3>
+                        <p>ul. Thomasa Woodrowa Wilsona 55<br>44-190 Knurów, Polska</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Telefon</h3>
+                        <p><a href="tel:+48123456789">+48 123 456 789</a></p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email</h3>
+                        <p><a href="mailto:kontakt@shinedetailing.pl">kontakt@shinedetailing.pl</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="map-wrapper">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2547.1234567890!2d18.6543210!3d50.2123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDEyJzQ0LjQiTiAxOMKwMzknMTUuNiJF!5e0!3m2!1spl!2spl!4v1234567890"
+                            width="100%"
+                            height="450"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-about">
+                        <h3 class="footer-brand">SHINE Car Detailing</h3>
+                        <p>
+                            Profesjonalne usługi detailingowe w Knurowie. Pasja, precyzja i perfekcja w każdym detalu.
+                        </p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>Menu</h4>
+                        <ul>
+                            <li><a href="#home">Start</a></li>
+                            <li><a href="#services">Usługi</a></li>
+                            <li><a href="#calculator">Kalkulator</a></li>
+                            <li><a href="#gallery">Realizacje</a></li>
+                            <li><a href="#about">O nas</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-links">
+                        <h4>Usługi</h4>
+                        <ul>
+                            <li><a href="#services">Korekta lakieru</a></li>
+                            <li><a href="#services">Ochrona ceramiczna</a></li>
+                            <li><a href="#services">Czyszczenie wnętrza</a></li>
+                            <li><a href="#services">Mycie parowe</a></li>
+                            <li><a href="#services">Renowacja reflektorów</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-contact">
+                        <h4>Kontakt</h4>
+                        <ul>
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>ul. T.W. Wilsona 55<br>44-190 Knurów</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+48 123 456 789</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>kontakt@shinedetailing.pl</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Shine Car Detailing. Wszystkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="scrollTop" class="scroll-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
