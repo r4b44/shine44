@@ -319,20 +319,25 @@
             // wyślij do backendu
             fetch('https://formspree.io/f/xvzznzgp', {
                 method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    bookingForm.reset();
-                } else {
-                    alert('Błąd: ' + (data.message || 'Nie udało się wysłać formularza'));
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
                 }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return response.json().then(data => { throw new Error(data.error || 'Błąd serwera') });
+                }
+            })
+            .then(data => {
+                alert('Dziękujemy! Twoje zapytanie zostało wysłane. Skontaktujemy się z Tobą w ciągu 24 godzin.');
+                bookingForm.reset();
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Przepraszamy, wystąpił błąd. Spróbuj ponownie lub zadzwoń: +48 123 456 789');
+                alert('Wystąpił problem z wysyłką. Upewnij się, że formularz jest aktywowany w Formspree lub zadzwoń: +48 123 456 789');
             })
             .finally(() => {
                 // odblokuj przycisk
