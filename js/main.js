@@ -1,13 +1,13 @@
 // główny plik javascript
 
-(function() {
+(function () {
     'use strict';
 
 
     // efekt nawigacji
     const navbar = document.getElementById('mainNav');
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
@@ -18,7 +18,7 @@
 
     // płynne przewijanie
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
 
@@ -95,7 +95,7 @@
     const vehicleTypes = document.querySelectorAll('.vehicle-type');
 
     vehicleTypes.forEach(type => {
-        type.addEventListener('click', function() {
+        type.addEventListener('click', function () {
             // usuń zaznaczenie
             vehicleTypes.forEach(t => t.classList.remove('selected'));
 
@@ -108,6 +108,7 @@
 
             // aktualizuj podsumowanie
             updateVehicleSummary(this.querySelector('h4').textContent);
+            updateServicesSummary(); // aktualizuj ceny usług
             updateTotalPrice();
         });
     });
@@ -120,7 +121,7 @@
         const label = checkboxWrapper.querySelector('label');
 
         // kliknięcie przełącza checkbox
-        checkboxWrapper.addEventListener('click', function(e) {
+        checkboxWrapper.addEventListener('click', function (e) {
             if (e.target !== checkbox) {
                 e.preventDefault();
                 checkbox.checked = !checkbox.checked;
@@ -128,7 +129,7 @@
             }
         });
 
-        checkbox.addEventListener('change', function() {
+        checkbox.addEventListener('change', function () {
             const serviceId = this.id;
             const serviceName = label.querySelector('.service-name').textContent;
             const basePrice = parseInt(this.getAttribute('data-price'));
@@ -157,7 +158,7 @@
     let currentStep = 1;
 
     if (nextStepBtn) {
-        nextStepBtn.addEventListener('click', function() {
+        nextStepBtn.addEventListener('click', function () {
             if (currentStep === 1) {
                 if (!selectedVehicleType) {
                     alert('Proszę wybrać rozmiar pojazdu');
@@ -170,7 +171,7 @@
     }
 
     if (prevStepBtn) {
-        prevStepBtn.addEventListener('click', function() {
+        prevStepBtn.addEventListener('click', function () {
             if (currentStep === 2) {
                 currentStep = 1;
                 showStep(currentStep);
@@ -263,7 +264,7 @@
     const bookFromCalculatorBtn = document.getElementById('bookFromCalculator');
 
     if (bookFromCalculatorBtn) {
-        bookFromCalculatorBtn.addEventListener('click', function(e) {
+        bookFromCalculatorBtn.addEventListener('click', function (e) {
             e.preventDefault();
 
             if (selectedServices.size === 0) {
@@ -296,7 +297,7 @@
     const bookingForm = document.getElementById('bookingForm');
 
     if (bookingForm) {
-        bookingForm.addEventListener('submit', function(e) {
+        bookingForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -324,26 +325,26 @@
                     'Accept': 'application/json'
                 }
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return response.json().then(data => { throw new Error(data.error || 'Błąd serwera') });
-                }
-            })
-            .then(data => {
-                alert('Dziękujemy! Twoje zapytanie zostało wysłane. Skontaktujemy się z Tobą w ciągu 24 godzin.');
-                bookingForm.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Wystąpił problem z wysyłką. Upewnij się, że formularz jest aktywowany w Formspree lub zadzwoń: +48 123 456 789');
-            })
-            .finally(() => {
-                // odblokuj przycisk
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            });
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.json().then(data => { throw new Error(data.error || 'Błąd serwera') });
+                    }
+                })
+                .then(data => {
+                    alert('Dziękujemy! Twoje zapytanie zostało wysłane. Skontaktujemy się z Tobą w ciągu 24 godzin.');
+                    bookingForm.reset();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Wystąpił problem z wysyłką. Upewnij się, że formularz jest aktywowany w Formspree lub zadzwoń: +48 123 456 789');
+                })
+                .finally(() => {
+                    // odblokuj przycisk
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                });
         });
     }
 
@@ -377,7 +378,7 @@
     const scrollTopBtn = document.getElementById('scrollTop');
 
     if (scrollTopBtn) {
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.scrollY > 500) {
                 scrollTopBtn.classList.add('visible');
             } else {
@@ -385,7 +386,7 @@
             }
         });
 
-        scrollTopBtn.addEventListener('click', function() {
+        scrollTopBtn.addEventListener('click', function () {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -397,7 +398,7 @@
     const heroSection = document.querySelector('.hero-section');
 
     if (heroSection) {
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const scrolled = window.scrollY;
             const parallaxSpeed = 0.5;
 
@@ -416,15 +417,25 @@
     const modalServices = document.getElementById('modalServices');
     const modalTime = document.getElementById('modalTime');
     const closeModal = document.querySelector('.gallery-modal-close');
+    const modalBookingBtn = document.querySelector('.modal-booking-btn');
+
+    let currentGalleryTitle = '';
+    let currentGalleryVehicle = '';
+    let currentGalleryServices = '';
 
     // otwieranie modala
     galleryItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
             const image = this.getAttribute('data-image');
             const title = this.getAttribute('data-title');
             const vehicle = this.getAttribute('data-vehicle');
             const services = this.getAttribute('data-services').split(',');
             const time = this.getAttribute('data-time');
+
+            // zapisz dane dla późniejszego użycia
+            currentGalleryTitle = title;
+            currentGalleryVehicle = vehicle;
+            currentGalleryServices = services.map(s => s.trim()).join(', ');
 
             // wypełnij modal danymi
             modalImage.src = image;
@@ -434,7 +445,7 @@
             modalTime.textContent = time;
 
             // wyświetl listę usług
-            modalServices.innerHTML = services.map(service => 
+            modalServices.innerHTML = services.map(service =>
                 `<li>${service.trim()}</li>`
             ).join('');
 
@@ -456,7 +467,7 @@
 
     // zamknij po kliknięciu w tło
     if (modal) {
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 closeGalleryModal();
             }
@@ -464,11 +475,41 @@
     }
 
     // zamknij klawiszem Escape
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             closeGalleryModal();
         }
     });
+
+    // obsługa przycisku "Umów podobną usługę"
+    if (modalBookingBtn) {
+        modalBookingBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // zamknij modal
+            closeGalleryModal();
+
+            // wypełnij formularz rezerwacji
+            const vehicleField = document.getElementById('vehicle');
+            const messageField = document.getElementById('message');
+
+            if (vehicleField) {
+                vehicleField.value = currentGalleryVehicle;
+            }
+
+            if (messageField) {
+                messageField.value = `Chciałbym umówić wizytę na usługę: ${currentGalleryTitle}\n\nUsługi do wykonania:\n${currentGalleryServices}\n\n`;
+            }
+
+            // przewiń do sekcji booking
+            setTimeout(() => {
+                document.getElementById('booking').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 300);
+        });
+    }
 
     // walidacja formularzy
     const forms = document.querySelectorAll('form');
@@ -477,7 +518,7 @@
         const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
 
         inputs.forEach(input => {
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
                 if (!this.value) {
                     this.style.borderColor = '#dc3545';
                 } else {
@@ -485,7 +526,7 @@
                 }
             });
 
-            input.addEventListener('input', function() {
+            input.addEventListener('input', function () {
                 if (this.value) {
                     this.style.borderColor = '#28a745';
                 }
@@ -544,7 +585,7 @@
     }
 
     // animacja ładowania
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
         document.body.style.opacity = '0';
         setTimeout(() => {
             document.body.style.transition = 'opacity 0.5s ease';
@@ -561,7 +602,7 @@
     // podświetlanie aktywnego linku
     const sections = document.querySelectorAll('section[id]');
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const scrollY = window.scrollY;
 
         sections.forEach(section => {
@@ -607,7 +648,7 @@
     }
 
     // nawigacja klawiaturą
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         // strzałki dla kalkulatora
         if (document.querySelector('.calculator-form')) {
             if (e.key === 'ArrowRight' && nextStepBtn) {
@@ -620,11 +661,11 @@
     });
 
     // obsługa drukowania
-    window.addEventListener('beforeprint', function() {
+    window.addEventListener('beforeprint', function () {
         document.body.classList.add('printing');
     });
 
-    window.addEventListener('afterprint', function() {
+    window.addEventListener('afterprint', function () {
         document.body.classList.remove('printing');
     });
 
