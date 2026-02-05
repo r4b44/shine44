@@ -407,13 +407,67 @@
         });
     }
 
-    // galeria
+    // galeria z modalem
     const galleryItems = document.querySelectorAll('.gallery-item');
+    const modal = document.getElementById('galleryModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalVehicle = document.getElementById('modalVehicle');
+    const modalServices = document.getElementById('modalServices');
+    const modalTime = document.getElementById('modalTime');
+    const closeModal = document.querySelector('.gallery-modal-close');
 
+    // otwieranie modala
     galleryItems.forEach(item => {
         item.addEventListener('click', function() {
-            // tutaj można dodać modal
+            const image = this.getAttribute('data-image');
+            const title = this.getAttribute('data-title');
+            const vehicle = this.getAttribute('data-vehicle');
+            const services = this.getAttribute('data-services').split(',');
+            const time = this.getAttribute('data-time');
+
+            // wypełnij modal danymi
+            modalImage.src = image;
+            modalImage.alt = `${title} - ${vehicle}`;
+            modalTitle.textContent = title;
+            modalVehicle.textContent = vehicle;
+            modalTime.textContent = time;
+
+            // wyświetl listę usług
+            modalServices.innerHTML = services.map(service => 
+                `<li>${service.trim()}</li>`
+            ).join('');
+
+            // pokaż modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
+    });
+
+    // zamykanie modala
+    function closeGalleryModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    if (closeModal) {
+        closeModal.addEventListener('click', closeGalleryModal);
+    }
+
+    // zamknij po kliknięciu w tło
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeGalleryModal();
+            }
+        });
+    }
+
+    // zamknij klawiszem Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeGalleryModal();
+        }
     });
 
     // walidacja formularzy
