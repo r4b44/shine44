@@ -1,9 +1,7 @@
-// panel administracyjny
 
-(function() {
+(function () {
     'use strict';
 
-    // uwierzytelnianie
     const ADMIN_CREDENTIALS = {
         username: 'admin',
         password: 'admin123'
@@ -11,16 +9,14 @@
 
     let currentImageFile = null;
 
-    // sprawdź czy zalogowany
     if (sessionStorage.getItem('adminLoggedIn') === 'true') {
         showAdminPanel();
         loadPromotions();
     }
 
-    // formularz logowania
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
             const username = document.getElementById('username').value;
@@ -36,17 +32,14 @@
         });
     }
 
-    // przesyłanie plików
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('promoImage');
     const imagePreview = document.getElementById('imagePreview');
     const previewImg = document.getElementById('previewImg');
 
     if (uploadArea) {
-        // kliknij aby przesłać
         uploadArea.addEventListener('click', () => fileInput.click());
 
-        // zdarzenia przeciągania
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadArea.classList.add('dragover');
@@ -66,7 +59,6 @@
             }
         });
 
-        // zmiana pliku
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 handleFileUpload(e.target.files[0]);
@@ -74,27 +66,25 @@
         });
     }
 
-    // formularz dodawania promocji
     const addPromotionForm = document.getElementById('addPromotionForm');
     if (addPromotionForm) {
-        addPromotionForm.addEventListener('submit', function(e) {
+        addPromotionForm.addEventListener('submit', function (e) {
             e.preventDefault();
             savePromotion();
         });
     }
 
-    // funkcje
     function showAdminPanel() {
         document.getElementById('loginBox').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
     }
 
-    window.logout = function() {
+    window.logout = function () {
         sessionStorage.removeItem('adminLoggedIn');
         location.reload();
     };
 
-    window.togglePromotionForm = function() {
+    window.togglePromotionForm = function () {
         const form = document.getElementById('promotionForm');
         form.classList.toggle('active');
         if (!form.classList.contains('active')) {
@@ -112,9 +102,8 @@
 
         currentImageFile = file;
 
-        // pokaż podgląd
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             previewImg.src = e.target.result;
             imagePreview.style.display = 'block';
         };
@@ -134,11 +123,10 @@
             oldPrice: document.getElementById('promoOldPrice').value,
             newPrice: document.getElementById('promoNewPrice').value,
             badge: document.getElementById('promoBadge').value,
-            image: previewImg.src, // Base64 image
+            image: previewImg.src,
             createdAt: new Date().toISOString()
         };
 
-        // pobierz istniejące promocje
         let promotions = JSON.parse(localStorage.getItem('promotions') || '[]');
         promotions.push(promotion);
         localStorage.setItem('promotions', JSON.stringify(promotions));
@@ -186,7 +174,7 @@
         `).join('');
     }
 
-    window.deletePromotion = function(id) {
+    window.deletePromotion = function (id) {
         if (!confirm('Czy na pewno chcesz usunąć tę promocję?')) {
             return;
         }
@@ -213,8 +201,7 @@
         }, 5000);
     }
 
-    // funkcja globalna dla strony głównej
-    window.loadPromotionsForSite = function() {
+    window.loadPromotionsForSite = function () {
         const promotions = JSON.parse(localStorage.getItem('promotions') || '[]');
         const container = document.getElementById('promotionsContainer');
 

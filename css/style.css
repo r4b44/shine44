@@ -1471,7 +1471,6 @@ section {
     }
 }
 
-/* Modal galerii */
 .gallery-modal {
     display: none;
     position: fixed;
@@ -1675,7 +1674,6 @@ section {
     color: white;
 }
 
-/* Responsywność modala */
 @media (max-width: 992px) {
     .gallery-modal-body {
         grid-template-columns: 1fr;

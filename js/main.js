@@ -1,10 +1,8 @@
-// główny plik javascript
 
 (function () {
     'use strict';
 
 
-    // efekt nawigacji
     const navbar = document.getElementById('mainNav');
 
     window.addEventListener('scroll', function () {
@@ -16,7 +14,6 @@
     });
 
 
-    // płynne przewijanie
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -29,7 +26,6 @@
                     behavior: 'smooth'
                 });
 
-                // zamknij menu mobilne
                 const navbarCollapse = document.querySelector('.navbar-collapse');
                 if (navbarCollapse.classList.contains('show')) {
                     const navbarToggler = document.querySelector('.navbar-toggler');
@@ -39,7 +35,6 @@
         });
     });
 
-    // statystyki
     const statsSection = document.querySelector('.stats-section');
     let statsAnimated = false;
 
@@ -48,8 +43,8 @@
 
         statNumbers.forEach(stat => {
             const target = parseInt(stat.getAttribute('data-target'));
-            const duration = 2000; // 2 seconds
-            const increment = target / (duration / 16); // 60fps
+            const duration = 2000;
+            const increment = target / (duration / 16);
             let current = 0;
 
             const updateCounter = () => {
@@ -66,7 +61,6 @@
         });
     }
 
-    // animacja statystyk
     const observerOptions = {
         threshold: 0.5
     };
@@ -85,42 +79,33 @@
     }
 
 
-    // kalkulator
-
     let selectedVehicleType = null;
     let selectedVehicleMultiplier = 1;
     const selectedServices = new Map();
 
-    // wybór typu pojazdu
     const vehicleTypes = document.querySelectorAll('.vehicle-type');
 
     vehicleTypes.forEach(type => {
         type.addEventListener('click', function () {
-            // usuń zaznaczenie
             vehicleTypes.forEach(t => t.classList.remove('selected'));
 
-            // zaznacz wybrany
             this.classList.add('selected');
 
-            // zapisz wybór
             selectedVehicleType = this.getAttribute('data-type');
             selectedVehicleMultiplier = parseFloat(this.getAttribute('data-multiplier'));
 
-            // aktualizuj podsumowanie
             updateVehicleSummary(this.querySelector('h4').textContent);
-            updateServicesSummary(); // aktualizuj ceny usług
+            updateServicesSummary();
             updateTotalPrice();
         });
     });
 
-    // wybór usług
     const serviceCheckboxes = document.querySelectorAll('.service-checkbox');
 
     serviceCheckboxes.forEach(checkboxWrapper => {
         const checkbox = checkboxWrapper.querySelector('input[type="checkbox"]');
         const label = checkboxWrapper.querySelector('label');
 
-        // kliknięcie przełącza checkbox
         checkboxWrapper.addEventListener('click', function (e) {
             if (e.target !== checkbox) {
                 e.preventDefault();
@@ -152,7 +137,6 @@
         });
     });
 
-    // nawigacja kroków kalkulatora
     const nextStepBtn = document.getElementById('nextStep');
     const prevStepBtn = document.getElementById('prevStep');
     let currentStep = 1;
@@ -229,7 +213,6 @@
         const roundedTotal = Math.round(total);
         const currentPrice = parseInt(totalPriceElement.textContent.replace(/\D/g, '')) || 0;
 
-        // Jeśli różnica jest mała, po prostu ustaw wartość bez animacji
         if (Math.abs(roundedTotal - currentPrice) < 10) {
             totalPriceElement.textContent = roundedTotal + ' zł';
         } else {
@@ -240,7 +223,6 @@
     function animateValue(element, start, end, duration) {
         if (!element) return;
 
-        // Jeśli start i end są takie same, po prostu ustaw wartość
         if (start === end) {
             element.textContent = end + ' zł';
             return;
@@ -260,7 +242,6 @@
         }, 16);
     }
 
-    // przeniesienie danych z kalkulatora do formularza
     const bookFromCalculatorBtn = document.getElementById('bookFromCalculator');
 
     if (bookFromCalculatorBtn) {
@@ -272,7 +253,6 @@
                 return;
             }
 
-            // buduj listę usług
             let servicesText = '';
             let totalPrice = 0;
             selectedServices.forEach((service, id) => {
@@ -281,19 +261,16 @@
                 totalPrice += price;
             });
 
-            // wypełnij pole wiadomości
             const messageField = document.getElementById('message');
             if (messageField) {
                 const vehicleType = selectedVehicleType || 'nie wybrano';
                 messageField.value = `Wycena z kalkulatora:\n\nTyp pojazdu: ${vehicleType}\n\nWybrane usługi:\n${servicesText}\nŁączna szacowana cena: ${totalPrice} zł\n\n`;
             }
 
-            // przewiń do formularza
             document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     }
 
-    // obsługa formularza rezerwacji
     const bookingForm = document.getElementById('bookingForm');
 
     if (bookingForm) {
@@ -303,11 +280,9 @@
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
 
-            // zablokuj przycisk i pokaż loading
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wysyłanie...';
 
-            // pobierz dane formularza
             const formData = new FormData();
             formData.append('name', document.getElementById('name').value);
             formData.append('phone', document.getElementById('phone').value);
@@ -317,7 +292,6 @@
             formData.append('date', document.getElementById('date').value);
             formData.append('message', document.getElementById('message').value);
 
-            // wyślij do backendu
             fetch('https://formspree.io/f/xvzznzgp', {
                 method: 'POST',
                 body: formData,
@@ -341,14 +315,12 @@
                     alert('Wystąpił problem z wysyłką. Upewnij się, że formularz jest aktywowany w Formspree lub zadzwoń: +48 123 456 789');
                 })
                 .finally(() => {
-                    // odblokuj przycisk
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalBtnText;
                 });
         });
     }
 
-    // animacje przy przewijaniu
     const animateOnScroll = () => {
         const elements = document.querySelectorAll('.service-card, .gallery-item, .contact-card');
 
@@ -374,7 +346,6 @@
         elements.forEach(el => observer.observe(el));
     };
 
-    // przycisk przewijania do góry
     const scrollTopBtn = document.getElementById('scrollTop');
 
     if (scrollTopBtn) {
@@ -394,7 +365,6 @@
         });
     }
 
-    // efekt paralaksy
     const heroSection = document.querySelector('.hero-section');
 
     if (heroSection) {
@@ -408,7 +378,6 @@
         });
     }
 
-    // galeria z modalem
     const galleryItems = document.querySelectorAll('.gallery-item');
     const modal = document.getElementById('galleryModal');
     const modalImage = document.getElementById('modalImage');
@@ -423,7 +392,6 @@
     let currentGalleryVehicle = '';
     let currentGalleryServices = '';
 
-    // otwieranie modala
     galleryItems.forEach(item => {
         item.addEventListener('click', function () {
             const image = this.getAttribute('data-image');
@@ -432,30 +400,25 @@
             const services = this.getAttribute('data-services').split(',');
             const time = this.getAttribute('data-time');
 
-            // zapisz dane dla późniejszego użycia
             currentGalleryTitle = title;
             currentGalleryVehicle = vehicle;
             currentGalleryServices = services.map(s => s.trim()).join(', ');
 
-            // wypełnij modal danymi
             modalImage.src = image;
             modalImage.alt = `${title} - ${vehicle}`;
             modalTitle.textContent = title;
             modalVehicle.textContent = vehicle;
             modalTime.textContent = time;
 
-            // wyświetl listę usług
             modalServices.innerHTML = services.map(service =>
                 `<li>${service.trim()}</li>`
             ).join('');
 
-            // pokaż modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
     });
 
-    // zamykanie modala
     function closeGalleryModal() {
         modal.classList.remove('active');
         document.body.style.overflow = 'auto';
@@ -465,7 +428,6 @@
         closeModal.addEventListener('click', closeGalleryModal);
     }
 
-    // zamknij po kliknięciu w tło
     if (modal) {
         modal.addEventListener('click', function (e) {
             if (e.target === modal) {
@@ -474,22 +436,18 @@
         });
     }
 
-    // zamknij klawiszem Escape
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             closeGalleryModal();
         }
     });
 
-    // obsługa przycisku "Umów podobną usługę"
     if (modalBookingBtn) {
         modalBookingBtn.addEventListener('click', function (e) {
             e.preventDefault();
 
-            // zamknij modal
             closeGalleryModal();
 
-            // wypełnij formularz rezerwacji
             const vehicleField = document.getElementById('vehicle');
             const messageField = document.getElementById('message');
 
@@ -501,7 +459,6 @@
                 messageField.value = `Chciałbym umówić wizytę na usługę: ${currentGalleryTitle}\n\nUsługi do wykonania:\n${currentGalleryServices}\n\n`;
             }
 
-            // przewiń do sekcji booking
             setTimeout(() => {
                 document.getElementById('booking').scrollIntoView({
                     behavior: 'smooth',
@@ -511,7 +468,6 @@
         });
     }
 
-    // walidacja formularzy
     const forms = document.querySelectorAll('form');
 
     forms.forEach(form => {
@@ -534,7 +490,6 @@
         });
     });
 
-    // zamykanie menu mobilnego
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     const navbarCollapse = document.querySelector('.navbar-collapse');
 
@@ -548,7 +503,6 @@
         });
     });
 
-    // ładowanie promocji
     function loadPromotions() {
         const promotions = JSON.parse(localStorage.getItem('promotions') || '[]');
         const container = document.getElementById('promotionsContainer');
@@ -584,7 +538,6 @@
         `).join('');
     }
 
-    // animacja ładowania
     window.addEventListener('load', function () {
         document.body.style.opacity = '0';
         setTimeout(() => {
@@ -592,14 +545,11 @@
             document.body.style.opacity = '1';
         }, 100);
 
-        // inicjalizuj animacje
         animateOnScroll();
 
-        // załaduj promocje
         loadPromotions();
     });
 
-    // podświetlanie aktywnego linku
     const sections = document.querySelectorAll('section[id]');
 
     window.addEventListener('scroll', function () {
@@ -620,16 +570,13 @@
         });
     });
 
-    // formularze obsługiwane powyżej
 
-    // dynamiczny rok w stopce
     const yearElement = document.querySelector('.footer-bottom p');
     if (yearElement) {
         const currentYear = new Date().getFullYear();
         yearElement.innerHTML = yearElement.innerHTML.replace('2024', currentYear);
     }
 
-    // leniwe ładowanie obrazów
     if ('IntersectionObserver' in window) {
         const lazyImages = document.querySelectorAll('img[data-src]');
 
@@ -647,9 +594,7 @@
         lazyImages.forEach(img => imageObserver.observe(img));
     }
 
-    // nawigacja klawiaturą
     document.addEventListener('keydown', function (e) {
-        // strzałki dla kalkulatora
         if (document.querySelector('.calculator-form')) {
             if (e.key === 'ArrowRight' && nextStepBtn) {
                 nextStepBtn.click();
@@ -660,7 +605,6 @@
         }
     });
 
-    // obsługa drukowania
     window.addEventListener('beforeprint', function () {
         document.body.classList.add('printing');
     });
@@ -671,9 +615,7 @@
 
 })();
 
-// service worker opcjonalnie
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        // odkomentuj aby włączyć service worker
     });
 }
