@@ -145,7 +145,7 @@ body {
     position: relative;
     height: 100vh;
     min-height: 700px;
-    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+    background: linear-gradient(135deg, rgba(13, 13, 13, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%), url('../zdjecia/tlo1.png') center center / cover no-repeat;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -762,13 +762,34 @@ section {
 }
 
 .vehicle-emoji {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
     transition: var(--transition);
+    box-shadow: var(--shadow-red);
+}
+
+.vehicle-emoji i {
+    font-size: 2rem;
+    color: white;
 }
 
 .vehicle-type:hover .vehicle-emoji {
     transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(220, 20, 60, 0.5);
+}
+
+.vehicle-type.selected .vehicle-emoji {
+    background: white;
+}
+
+.vehicle-type.selected .vehicle-emoji i {
+    color: var(--primary-color);
 }
 
 .vehicle-type.selected .vehicle-icon {
@@ -796,7 +817,84 @@ section {
 .services-list {
     display: flex;
     flex-direction: column;
+    gap: 0.75rem;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.service-category {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0.5rem 0 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(220, 20, 60, 0.2);
+}
+
+.service-category i {
+    margin-right: 0.5rem;
+}
+
+.service-note {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
+
+.service-subcategory {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #adb5bd;
+    margin: 0.25rem 0 0;
+    padding-left: 0.5rem;
+}
+
+.qty-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 1rem;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.qty-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.qty-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    min-width: 24px;
+    text-align: center;
+}
+
+.service-qty {
+    padding: 1rem 1.5rem;
 }
 
 .service-checkbox {
@@ -1023,15 +1121,22 @@ section {
 .about-image {
     position: relative;
     height: 600px;
-    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
     border-radius: 30px;
     margin-bottom: 2rem;
 }
 
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
 .about-badge {
     position: absolute;
-    top: -30px;
-    right: -30px;
+    top: -40px;
+    right: 20px;
+    z-index: 3;
     width: 150px;
     height: 150px;
     background: var(--gradient-dark);
@@ -1043,6 +1148,7 @@ section {
     color: white;
     box-shadow: var(--shadow-lg);
     animation: float 3s ease-in-out infinite;
+    border: 3px solid var(--primary-color);
 }
 
 @keyframes float {

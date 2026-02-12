@@ -80,30 +80,97 @@
 
 
     let selectedVehicleType = null;
-    let selectedVehicleMultiplier = 1;
     const selectedServices = new Map();
+
+    function getVehicleSize() {
+        if (selectedVehicleType === 'small') return 'small';
+        if (selectedVehicleType === 'medium') return 'medium';
+        if (selectedVehicleType === 'large') return 'large';
+        return 'small';
+    }
+
+    function getServicePrice(checkbox) {
+        const size = getVehicleSize();
+        return parseInt(checkbox.getAttribute('data-price-' + size)) || 0;
+    }
+
+    function isPranieSelected() {
+        const pranieCheckboxes = document.querySelectorAll('.service-checkbox[data-pranie="true"] input[type="checkbox"]');
+        let anyChecked = false;
+        pranieCheckboxes.forEach(cb => { if (cb.checked) anyChecked = true; });
+        if (anyChecked) return true;
+        const pranieQtyIds = [];
+        document.querySelectorAll('.service-checkbox.service-qty[data-pranie="true"] input[type="hidden"]').forEach(h => {
+            pranieQtyIds.push(h.id);
+        });
+        for (const id of pranieQtyIds) {
+            const svc = selectedServices.get(id);
+            if (svc && svc.qty && svc.qty > 0) return true;
+        }
+        return false;
+    }
+
+    function updateOdswiezenieGratis() {
+        const odswiezenieBox = document.getElementById('odswiezenieBox');
+        if (!odswiezenieBox) return;
+        const cb = odswiezenieBox.querySelector('input[type="checkbox"]');
+        const noteEl = odswiezenieBox.querySelector('.service-note');
+        if (isPranieSelected()) {
+            if (!cb.checked) {
+                cb.checked = true;
+                cb.dispatchEvent(new Event('change'));
+            }
+            if (noteEl) noteEl.style.color = '#28a745';
+        } else {
+            if (noteEl) noteEl.style.color = '';
+        }
+    }
+
+    function updateDisplayedPrices() {
+        const size = getVehicleSize();
+        document.querySelectorAll('.service-checkbox input[type="checkbox"]').forEach(cb => {
+            const priceEl = cb.closest('.service-checkbox').querySelector('.service-price');
+            if (!priceEl) return;
+            if (cb.hasAttribute('data-individual')) return;
+            const price = parseInt(cb.getAttribute('data-price-' + size)) || 0;
+            if (price === 0) return;
+            priceEl.textContent = price + ' zł';
+        });
+    }
 
     const vehicleTypes = document.querySelectorAll('.vehicle-type');
 
     vehicleTypes.forEach(type => {
         type.addEventListener('click', function () {
             vehicleTypes.forEach(t => t.classList.remove('selected'));
-
             this.classList.add('selected');
-
             selectedVehicleType = this.getAttribute('data-type');
-            selectedVehicleMultiplier = parseFloat(this.getAttribute('data-multiplier'));
-
             updateVehicleSummary(this.querySelector('h4').textContent);
+
+            selectedServices.forEach((service, id) => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    const unitPrice = getServicePrice(checkbox);
+                    if (service.qty) {
+                        service.unitPrice = unitPrice;
+                        service.price = unitPrice * service.qty;
+                    } else {
+                        service.price = unitPrice;
+                    }
+                }
+            });
+
+            updateDisplayedPrices();
             updateServicesSummary();
             updateTotalPrice();
         });
     });
 
-    const serviceCheckboxes = document.querySelectorAll('.service-checkbox');
+    const serviceCheckboxes = document.querySelectorAll('.service-checkbox:not(.service-qty)');
 
     serviceCheckboxes.forEach(checkboxWrapper => {
         const checkbox = checkboxWrapper.querySelector('input[type="checkbox"]');
+        if (!checkbox) return;
         const label = checkboxWrapper.querySelector('label');
 
         checkboxWrapper.addEventListener('click', function (e) {
@@ -117,12 +184,14 @@
         checkbox.addEventListener('change', function () {
             const serviceId = this.id;
             const serviceName = label.querySelector('.service-name').textContent;
-            const basePrice = parseInt(this.getAttribute('data-price'));
+            const isIndividual = this.hasAttribute('data-individual');
+            const price = getServicePrice(this);
 
             if (this.checked) {
                 selectedServices.set(serviceId, {
                     name: serviceName,
-                    basePrice: basePrice
+                    price: price,
+                    individual: isIndividual
                 });
                 checkboxWrapper.style.background = 'rgba(220, 20, 60, 0.1)';
                 checkboxWrapper.style.borderColor = '#dc143c';
@@ -132,10 +201,94 @@
                 checkboxWrapper.style.borderColor = '';
             }
 
+            updateOdswiezenieGratis();
             updateServicesSummary();
             updateTotalPrice();
         });
     });
+
+    document.querySelectorAll('.qty-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const targetId = this.getAttribute('data-target');
+            const qtyEl = document.getElementById(targetId);
+            if (!qtyEl) return;
+            let qty = parseInt(qtyEl.textContent) || 0;
+
+            if (this.classList.contains('qty-plus')) {
+                qty++;
+            } else if (this.classList.contains('qty-minus') && qty > 0) {
+                qty--;
+            }
+
+            qtyEl.textContent = qty;
+
+            const wrapper = this.closest('.service-checkbox');
+            const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+            if (!hiddenInput) return;
+
+            const serviceId = hiddenInput.id;
+            const nameEl = wrapper.querySelector('.service-name');
+            const serviceName = nameEl ? nameEl.textContent : serviceId;
+            const unitPrice = getServicePrice(hiddenInput);
+
+            if (qty > 0) {
+                selectedServices.set(serviceId, {
+                    name: serviceName,
+                    price: unitPrice * qty,
+                    qty: qty,
+                    unitPrice: unitPrice
+                });
+                wrapper.style.background = 'rgba(220, 20, 60, 0.1)';
+                wrapper.style.borderColor = '#dc143c';
+            } else {
+                selectedServices.delete(serviceId);
+                wrapper.style.background = '';
+                wrapper.style.borderColor = '';
+            }
+
+            updateOdswiezenieGratis();
+            updateServicesSummary();
+            updateTotalPrice();
+        });
+    });
+
+    function scrollToBookingWithServices() {
+        let servicesText = '';
+        let totalPrice = 0;
+        let hasPranie = isPranieSelected();
+
+        selectedServices.forEach((service, id) => {
+            let isOdswiezenie = (id === 'wnetrze1');
+            let isFree = isOdswiezenie && hasPranie;
+
+            if (service.individual) {
+                servicesText += `- ${service.name}: Wycena indywidualna\n`;
+            } else if (isFree) {
+                servicesText += `- ${service.name}: GRATIS\n`;
+            } else if (service.qty) {
+                servicesText += `- ${service.name} ×${service.qty}: ${service.price} zł\n`;
+                totalPrice += service.price;
+            } else {
+                servicesText += `- ${service.name}: ${service.price} zł\n`;
+                totalPrice += service.price;
+            }
+        });
+
+        const messageField = document.getElementById('message');
+        if (messageField) {
+            const vehicleNames = { small: 'Segment A/B (Małe)', medium: 'Segment C/D (Średnie)', large: 'SUV/VAN (Duże)' };
+            const vehicleName = vehicleNames[selectedVehicleType] || 'nie wybrano';
+            messageField.value = `Wycena z kalkulatora:\n\nTyp pojazdu: ${vehicleName}\n\nWybrane usługi:\n${servicesText}\nSzacowana cena: ${totalPrice} zł\n`;
+        }
+
+        const serviceSelect = document.getElementById('service');
+        if (serviceSelect) {
+            serviceSelect.value = 'inne';
+        }
+
+        document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
     const nextStepBtn = document.getElementById('nextStep');
     const prevStepBtn = document.getElementById('prevStep');
@@ -150,6 +303,12 @@
                 }
                 currentStep = 2;
                 showStep(currentStep);
+            } else if (currentStep === 2) {
+                if (selectedServices.size === 0) {
+                    alert('Proszę wybrać przynajmniej jedną usługę');
+                    return;
+                }
+                scrollToBookingWithServices();
             }
         });
     }
@@ -190,21 +349,47 @@
             return;
         }
 
+        let hasPranie = isPranieSelected();
+
         selectedServices.forEach((service, id) => {
-            const price = Math.round(service.basePrice * selectedVehicleMultiplier);
             const li = document.createElement('li');
-            li.innerHTML = `
-                <span>${service.name}</span>
-                <span>${price} zł</span>
-            `;
+            let isOdswiezenie = (id === 'wnetrze1');
+            let isFree = isOdswiezenie && hasPranie;
+
+            if (service.individual) {
+                li.innerHTML = `
+                    <span>${service.name}</span>
+                    <span>Wycena indyw.</span>
+                `;
+            } else if (isFree) {
+                li.innerHTML = `
+                    <span>${service.name} <small style="color:#28a745">(GRATIS)</small></span>
+                    <span><s>150 zł</s> 0 zł</span>
+                `;
+            } else if (service.qty) {
+                li.innerHTML = `
+                    <span>${service.name} ×${service.qty}</span>
+                    <span>${service.price} zł</span>
+                `;
+            } else {
+                li.innerHTML = `
+                    <span>${service.name}</span>
+                    <span>${service.price} zł</span>
+                `;
+            }
             servicesList.appendChild(li);
         });
     }
 
     function updateTotalPrice() {
         let total = 0;
-        selectedServices.forEach(service => {
-            total += service.basePrice * selectedVehicleMultiplier;
+        let hasPranie = isPranieSelected();
+
+        selectedServices.forEach((service, id) => {
+            if (service.individual) return;
+            let isOdswiezenie = (id === 'wnetrze1');
+            if (isOdswiezenie && hasPranie) return;
+            total += service.price;
         });
 
         const totalPriceElement = document.getElementById('totalPrice');
@@ -253,21 +438,7 @@
                 return;
             }
 
-            let servicesText = '';
-            let totalPrice = 0;
-            selectedServices.forEach((service, id) => {
-                const price = Math.round(service.basePrice * selectedVehicleMultiplier);
-                servicesText += `- ${service.name}: ${price} zł\n`;
-                totalPrice += price;
-            });
-
-            const messageField = document.getElementById('message');
-            if (messageField) {
-                const vehicleType = selectedVehicleType || 'nie wybrano';
-                messageField.value = `Wycena z kalkulatora:\n\nTyp pojazdu: ${vehicleType}\n\nWybrane usługi:\n${servicesText}\nŁączna szacowana cena: ${totalPrice} zł\n\n`;
-            }
-
-            document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            scrollToBookingWithServices();
         });
     }
 
@@ -321,30 +492,6 @@
         });
     }
 
-    const animateOnScroll = () => {
-        const elements = document.querySelectorAll('.service-card, .gallery-item, .contact-card');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '0';
-                    entry.target.style.transform = 'translateY(30px)';
-
-                    setTimeout(() => {
-                        entry.target.style.transition = 'all 0.6s ease';
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, 100);
-
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        elements.forEach(el => observer.observe(el));
-    };
 
     const scrollTopBtn = document.getElementById('scrollTop');
 
@@ -384,7 +531,6 @@
     const modalTitle = document.getElementById('modalTitle');
     const modalVehicle = document.getElementById('modalVehicle');
     const modalServices = document.getElementById('modalServices');
-    const modalTime = document.getElementById('modalTime');
     const closeModal = document.querySelector('.gallery-modal-close');
     const modalBookingBtn = document.querySelector('.modal-booking-btn');
 
@@ -398,7 +544,6 @@
             const title = this.getAttribute('data-title');
             const vehicle = this.getAttribute('data-vehicle');
             const services = this.getAttribute('data-services').split(',');
-            const time = this.getAttribute('data-time');
 
             currentGalleryTitle = title;
             currentGalleryVehicle = vehicle;
@@ -408,7 +553,6 @@
             modalImage.alt = `${title} - ${vehicle}`;
             modalTitle.textContent = title;
             modalVehicle.textContent = vehicle;
-            modalTime.textContent = time;
 
             modalServices.innerHTML = services.map(service =>
                 `<li>${service.trim()}</li>`
@@ -545,7 +689,6 @@
             document.body.style.opacity = '1';
         }, 100);
 
-        animateOnScroll();
 
         loadPromotions();
     });
@@ -619,3 +762,5 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
     });
 }
+
+
